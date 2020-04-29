@@ -1,27 +1,32 @@
 import axios from "axios"; // we'll learn more about Axios later.
 import launchServer from "./index";
 import db from "../db/index";
+import {dbService} from '../db/jeopardy/index';
 import mockData from "../mockdata/categories_clues";
+import dotenv from "dotenv";
+import path from 'path';
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 const TEST_URL = "http://localhost";
-const TEST_PORT = 3434;
-let server;
+const TEST_PORT = process.env.TEST_PORT;
+const server = launchServer(TEST_PORT);
+const testDb = dbService(db.test);
+
+
+process.on("uncaughtException", (...stuff) => {
+  console.warn("Uncaught exception!");
+  server.close();
+  console.log(`closing server because of ${JSON.stringify(stuff)}`);
+});
 
 describe("/src/server/index.js", () => {
   beforeAll(async () => {
-    // to test the server, we have to launch the server
-    server = launchServer(TEST_PORT);
-    // let's also drop the test db
-    await db.test.remove({}, { multi: true }, function (err, numRemoved) {
-      if (err) {
-        throw new Error(err);
-      }
-      console.log(`Successfully removed ${numRemoved} documents`);
-    });
+    testDb.drop();
     return;
   });
   afterAll(() => {
     // we returned the server object from launchServer so that we can close it;
+    testDb.drop();
     server.close();
     return;
   });

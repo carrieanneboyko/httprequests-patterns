@@ -29,11 +29,11 @@ export const dbService = (collection) => {
       categoryByTitle: (title) => deleteCategory(collection)({ title }),
     },
     drop: () =>
-      collection.remove({}, { multi: true }, function (err, numRemoved) {
+      collection.remove({}, { multi: true }, function (err, _numRemoved) {
         if (err) {
           throw new Error(err);
         }
-        console.log(`Successfully removed ${numRemoved} documents`);
+
       }),
   };
 };

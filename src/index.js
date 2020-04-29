@@ -18,6 +18,12 @@ const main = (port) => {
   process.on("SIGINT", () => {
     process.exit();
   });
+  process.on("uncaughtException", (...stuff) => {
+    console.warn("Uncaught exception!");
+    server.close();
+    console.log(`closing server because of ${JSON.stringify(stuff)}`);
+  });
 };
 
 main(PORT);
+
