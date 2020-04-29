@@ -20,16 +20,6 @@ describe("dbService", () => {
           title: "harry truman",
         });
       });
-      it("won't re-insert with the same id", async () => {
-        try {
-          const result = await testDb.create.category(mockCategories[0]);
-          expect(true).toBeFalse(); // this line should not execute;
-        } catch (err) {
-          expect(err.toString()).toBe(
-            "Error: Can't insert key 11512, it violates the unique constraint"
-          );
-        }
-      });
     });
     describe("dbService.create.categories", () => {
       it("creates multiple categories", async () => {
