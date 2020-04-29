@@ -9,7 +9,9 @@
     "dev": "yarn build && nodemon ./lib/index.js",
     "pretty": "prettier ./src --write",
     "setupenv": "rimraf ./.env && touch .env && cat example.env > .env",
-    "test": "yarn build && jest --verbose"
+    "test": "yarn purge:testdb && yarn build && jest --verbose",
+    "dangerously:purge:proddb": "rimraf ./data/jeopardy.db",
+    "purge:testdb": "rimraf ./data/test.db"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
