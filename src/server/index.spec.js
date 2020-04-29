@@ -1,7 +1,7 @@
 import axios from "axios"; // we'll learn more about Axios later.
 import launchServer from "./index";
 import db from "../db/index";
-import mockData from "../__mockdata__/categories_clues.json";
+import mockData from "../mockdata/categories_clues";
 
 const TEST_URL = "http://localhost";
 const TEST_PORT = 3434;

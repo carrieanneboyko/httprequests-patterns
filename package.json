@@ -5,17 +5,18 @@
   "author": "Brian Boyko <brian.boyko@publicissapient.com>",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf ./lib && babel src -d lib",
+    "build": "rimraf ./lib && babel src -d lib --copy-files",
     "dev": "yarn build && nodemon ./lib/index.js",
     "pretty": "prettier ./src --write",
     "setupenv": "rimraf ./.env && touch .env && cat example.env > .env",
-    "test": "jest --verbose"
+    "test": "rimraf ./data/test.db && jest --verbose"
   },
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
     "axios": "^0.19.2",
     "babel-node": "^0.0.1-security",
+    "babel-plugin-inline-json-import": "^0.3.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -33,5 +34,8 @@
     "copyfiles": "^2.2.0",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2"
+  },
+  "transform": {
+    "^.+\\.[t|j]sx?$": "babel-jest"
   }
 }
